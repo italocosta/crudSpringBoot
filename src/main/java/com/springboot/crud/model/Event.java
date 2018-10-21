@@ -1,11 +1,14 @@
 package com.springboot.crud.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Event implements Serializable{
@@ -16,10 +19,17 @@ public class Event implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@NotEmpty
 	private String name;
+	@NotEmpty
 	private String locale;
+	@NotEmpty
 	private String date;
+	@NotEmpty
 	private String time;
+	
+	@OneToMany
+	private List<Invited> inviteds;
 	
 	
 	public String getName() {
@@ -51,6 +61,12 @@ public class Event implements Serializable{
 	}
 	public void setId(Long id) {
 		this.id = id;
+	}
+	public List<Invited> getInviteds() {
+		return inviteds;
+	}
+	public void setInviteds(List<Invited> inviteds) {
+		this.inviteds = inviteds;
 	}
 	
 	
