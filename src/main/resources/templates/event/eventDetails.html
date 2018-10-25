@@ -13,17 +13,24 @@
 		
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		
+		<link rel="stylesheet" href="/style/style.css">
 	</head>
 	<body>
-		<h2><span th:text="${event.name}"></span></h2>
-		<h3><a href="/events" class="waves-effect waves-light btn"><i class="material-icons left">format_list_bulleted</i>Back to list</a></h3>
+	
+		<header>
+			<nav>
+			   <div class="nav-wrapper">
+			     <a class="brand-logo"><span th:text="${event.name}"></span></a>
+			     <ul id="nav-mobile" class="right hide-on-med-and-down">
+			       <li><a href="/events" class="waves-effect waves-light btn"><i class="material-icons left">format_list_bulleted</i>Back to list</a></li>
+			     </ul>
+			   </div>
+			 </nav>
+		</header>
 		
-		<div class="container">
-			<div class="row">
-				<div class="col s12">
-					Name: <span th:text="${event.name}"></span>
-				</div>
-			</div>
+		<div class="container eventDetails">
+			<h5>Event Detail</h5>
 			<div class="row">
 				<div class="col s6">
 					Locale: <span th:text="${event.locale}"></span>
@@ -38,31 +45,38 @@
 			
 			<th:block th:include="msgValidation" />
 			
+		</div>
+		<div class="container formInvited">
 			<form method="post">
-				Name: <input type="text" value="" name="name">
-				National ID: <input type="text" value="" name="nationalID">
+				Name: <input type="text" value="" name="name" placeholder="Complete name">
+				National ID: <input type="text" value="" name="nationalID" placeholder="National ID">
 				
 				<button class="btn waves-effect waves-light" type="submit">Add
 					<i class="material-icons left">add_circle_outline</i>
 				</button>
 			</form>
+			<div class="tableInvited">
+				<h5>List of inviteds</h5>
+				<table class="highlight">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>National ID</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="invited : ${event.inviteds}">
+							<td><span th:text="${invited.name}"></span></td>
+							<td><span th:text="${invited.nationalID}"></span></td>
+							<form th:method="delete" action="#" th:action="@{'/deleteInvited/{id}/{nationalId}'(id=${event.id},nationalId=${invited.nationalID})}">
+								<td><button class="btn-floating waves-effect waves-light" type="submit"><i class="material-icons left">delete</i></button></td>
+							</form>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
-		<p>
-		<h5>List of inviteds</h5>
-		<table class="container">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>National ID</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="invited : ${event.inviteds}">
-					<td><span th:text="${invited.name}"></span></td>
-					<td><span th:text="${invited.nationalID}"></span></td>
-				</tr>
-			</tbody>
-		</table>
 		
 		
 		<!--JavaScript at end of body for optimized loading-->

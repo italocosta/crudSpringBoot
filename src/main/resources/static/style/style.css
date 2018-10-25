@@ -1,0 +1,31 @@
+.eventDetails {
+	box-shadow: 0px 0px 5px grey;
+	padding-top: 20px;
+	padding-left: 20px;
+	padding-bottom: 5px;
+	margin-bottom: 30px;
+	margin-top: 10px;
+}
+
+.formInvited {
+	box-shadow: 0px 0px 5px grey;
+	padding-top: 20px;
+	padding-left: 20px;
+	padding-bottom: 10px;
+}
+
+.tableInvited {
+	margin-top: 50px;
+	width: 50%;
+}
+
+nav .brand-logo {
+	padding-left: 10px;
+}
+.formEvent{
+	margin-top: 10px;
+	box-shadow: 0px 0px 5px grey;
+	padding-top: 20px;
+	padding-left: 20px;
+	padding-bottom: 10px;
+}

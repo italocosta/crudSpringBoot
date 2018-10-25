@@ -13,33 +13,44 @@
 		
 		<!--Let browser know website is optimized for mobile-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		
+		<link rel="stylesheet" href="/style/style.css">
 	</head>
 	<body>
-		<h2>New Event</h2>
-		<h3><a href="/events" class="waves-effect waves-light btn"><i class="material-icons left">format_list_bulleted</i>Back to list</a></h3>
-		
+		<header>
+			<nav>
+			   <div class="nav-wrapper">
+			     <a class="brand-logo">New Event</a>
+			     <ul id="nav-mobile" class="right hide-on-med-and-down">
+			       <li><a href="/events" class="waves-effect waves-light btn"><i class="material-icons left">format_list_bulleted</i>Back to list</a></li>
+			     </ul>
+			   </div>
+			 </nav>
+		</header>
+		<div class="container formEvent">
 		<th:block th:include="msgValidation" />
-		<form class="container" method="post">
-			<div class="row">
-				<div class="input-field col s12">
-					Name: <input type="text" value="" name="name"/>
+			<form method="post">
+				<div class="row">
+					<div class="input-field col s12">
+						Name: <input type="text" value="" name="name"/>
+					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="input-field col s6">
-					Locale: <input type="text" value="" name="locale"/>
+				<div class="row">
+					<div class="input-field col s6">
+						Locale: <input type="text" value="" name="locale"/>
+					</div>
+					<div class="input-field col s3">
+						Date: <input type="date" value="" name="date"/>
+					</div>
+					<div class="input-field col s3">
+						Time: <input type="time" value="" name="time"/>
+					</div>
 				</div>
-				<div class="input-field col s3">
-					Date: <input type="date" value="" name="date"/>
-				</div>
-				<div class="input-field col s3">
-					Time: <input type="text" value="" name="time"/>
-				</div>
-			</div>
-			<button class="btn waves-effect waves-light" type="submit">Save
-				<i class="material-icons right">save</i>
-			</button>
-		</form>
+				<button class="btn waves-effect waves-light" type="submit">Save
+					<i class="material-icons right">save</i>
+				</button>
+			</form>
+		</div>
 		
 		<!--JavaScript at end of body for optimized loading-->
       	<script type="text/javascript" src="/materialize/js/materialize.min.js"></script>

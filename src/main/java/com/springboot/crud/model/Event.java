@@ -3,6 +3,7 @@ package com.springboot.crud.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +29,7 @@ public class Event implements Serializable{
 	@NotEmpty
 	private String time;
 	
-	@OneToMany
+	@OneToMany(orphanRemoval=true, cascade=CascadeType.REMOVE)
 	private List<Invited> inviteds;
 	
 	
@@ -68,6 +69,30 @@ public class Event implements Serializable{
 	public void setInviteds(List<Invited> inviteds) {
 		this.inviteds = inviteds;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Event other = (Event) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+	
 	
 	
 }

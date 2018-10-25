@@ -52,6 +52,15 @@ public class EventController {
 		return modelAndView;
 	}
 	
+	@RequestMapping(value="deleteEvent/{id}", method=RequestMethod.DELETE)
+	public String deleteEvent(@PathVariable("id") Long id) {
+		Optional<Event> event = eventRepository.findById(id);
+		if(event.isPresent()) {
+			eventRepository.delete(event.get());
+		}
+		return "redirect:/events";
+	}
+	
 	@RequestMapping(value="event/{id}",method=RequestMethod.GET)
 	public ModelAndView eventDetail(@PathVariable("id") Long id) {
 		Optional<Event> event = eventRepository.findById(id);
@@ -75,6 +84,19 @@ public class EventController {
 			eventRepository.save(event.get());
 		}
 		redirectAttributes.addFlashAttribute("msgSuccess", "Invited add success !");
+		return "redirect:/event/{id}";
+	}
+	
+	@RequestMapping(value="deleteInvited/{id}/{nationalId}", method=RequestMethod.DELETE)
+	public String deleteInvited(@PathVariable("nationalId") String nationalID) {
+		Optional<Invited> invited = invitedRepository.findByNationalID(nationalID);
+		if(invited.isPresent()) {
+			Event event = invited.get().getEvent();
+			event.getInviteds().remove(invited.get());
+			eventRepository.save(event);
+			invitedRepository.delete(invited.get());
+		}
+		
 		return "redirect:/event/{id}";
 	}
 	
