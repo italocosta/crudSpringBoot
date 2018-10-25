@@ -79,6 +79,7 @@ public class EventController {
 		Optional<Event> event = eventRepository.findById(id);
 		if(event.isPresent()) {
 			invited.setEvent(event.get());
+			invited.setId(null);
 			invitedRepository.save(invited);
 			event.get().getInviteds().add(invited);
 			eventRepository.save(event.get());
@@ -87,9 +88,9 @@ public class EventController {
 		return "redirect:/event/{id}";
 	}
 	
-	@RequestMapping(value="deleteInvited/{id}/{nationalId}", method=RequestMethod.DELETE)
-	public String deleteInvited(@PathVariable("nationalId") String nationalID) {
-		Optional<Invited> invited = invitedRepository.findByNationalID(nationalID);
+	@RequestMapping(value="deleteInvited/{id}/{idInvited}", method=RequestMethod.DELETE)
+	public String deleteInvited(@PathVariable("idInvited") Long idInvited) {
+		Optional<Invited> invited = invitedRepository.findById(idInvited);
 		if(invited.isPresent()) {
 			Event event = invited.get().getEvent();
 			event.getInviteds().remove(invited.get());

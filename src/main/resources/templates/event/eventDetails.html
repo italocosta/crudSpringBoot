@@ -69,7 +69,7 @@
 						<tr th:each="invited : ${event.inviteds}">
 							<td><span th:text="${invited.name}"></span></td>
 							<td><span th:text="${invited.nationalID}"></span></td>
-							<form th:method="delete" action="#" th:action="@{'/deleteInvited/{id}/{nationalId}'(id=${event.id},nationalId=${invited.nationalID})}">
+							<form th:method="delete" action="#" th:action="@{'/deleteInvited/{id}/{idInvited}'(id=${event.id},idInvited=${invited.id})}">
 								<td><button class="btn-floating waves-effect waves-light" type="submit"><i class="material-icons left">delete</i></button></td>
 							</form>
 						</tr>
