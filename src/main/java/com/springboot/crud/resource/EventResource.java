@@ -1,10 +1,14 @@
 package com.springboot.crud.resource;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,13 +33,24 @@ public class EventResource {
 	@GetMapping(produces="application/json")
 	public @ResponseBody Iterable<Event> listEvents() {
 		Iterable<Event> events =  eventRepository.findAll();
+		events.forEach(event -> event.add(linkTo(methodOn(EventResource.class).event(event.getIdEvent())).withSelfRel()));
 		return events;
+	}
+	
+	@ApiOperation(value="Get an event")
+	@GetMapping(value = "/{idEvent}", produces="application/json")
+	public @ResponseBody Event event(@PathVariable(value="idEvent") Long id) {
+		Event event = eventRepository.findById(id).get();
+		event.add(linkTo(methodOn(EventResource.class).listEvents()).withRel("List of Events"));
+		return event;
 	}
 	
 	@ApiOperation(value="Add an event")
 	@PostMapping()
 	public Event addEvent(@RequestBody @Valid Event event) {
-		return eventRepository.save(event);
+		eventRepository.save(event);
+		event.add(linkTo(methodOn(EventResource.class).event(event.getIdEvent())).withSelfRel());
+		return event;
 	}
 	
 	@ApiOperation(value="Delete an event")

@@ -11,14 +11,19 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 
+import org.springframework.hateoas.ResourceSupport;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
-public class Event implements Serializable{
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Event extends ResourceSupport implements Serializable{
 	
 	private static final long serialVersionUID = 1430967821258933303L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long idEvent;
 	
 	@NotEmpty
 	private String name;
@@ -57,11 +62,12 @@ public class Event implements Serializable{
 	public void setTime(String time) {
 		this.time = time;
 	}
-	public Long getId() {
-		return id;
+	
+	public Long getIdEvent() {
+		return idEvent;
 	}
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdEvent(Long idEvent) {
+		this.idEvent = idEvent;
 	}
 	public List<Invited> getInviteds() {
 		return inviteds;
@@ -73,7 +79,7 @@ public class Event implements Serializable{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idEvent == null) ? 0 : idEvent.hashCode());
 		return result;
 	}
 	@Override
@@ -85,10 +91,10 @@ public class Event implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Event other = (Event) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (idEvent == null) {
+			if (other.idEvent != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idEvent.equals(other.idEvent))
 			return false;
 		return true;
 	}
